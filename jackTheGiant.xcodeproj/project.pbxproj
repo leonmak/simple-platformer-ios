@@ -59,6 +59,7 @@
 		2445CBFF1DF6CF670021FE46 /* Player 6.png in Resources */ = {isa = PBXBuildFile; fileRef = 2445CBF71DF6CF670021FE46 /* Player 6.png */; };
 		2445CC001DF6CF670021FE46 /* Player 7.png in Resources */ = {isa = PBXBuildFile; fileRef = 2445CBF81DF6CF670021FE46 /* Player 7.png */; };
 		2445CC011DF6CF670021FE46 /* Player 8.png in Resources */ = {isa = PBXBuildFile; fileRef = 2445CBF91DF6CF670021FE46 /* Player 8.png */; };
+		24904EAE1DF711BA00D68E6F /* BGClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24904EAD1DF711BA00D68E6F /* BGClass.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -116,6 +117,7 @@
 		2445CBF71DF6CF670021FE46 /* Player 6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Player 6.png"; sourceTree = "<group>"; };
 		2445CBF81DF6CF670021FE46 /* Player 7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Player 7.png"; sourceTree = "<group>"; };
 		2445CBF91DF6CF670021FE46 /* Player 8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Player 8.png"; sourceTree = "<group>"; };
+		24904EAD1DF711BA00D68E6F /* BGClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BGClass.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -298,6 +300,7 @@
 			children = (
 				2445CBC71DF6B6950021FE46 /* Player Class */,
 				2445CB5F1DF6A3FD0021FE46 /* Scene Classes */,
+				24904EAF1DF711D600D68E6F /* Background Class */,
 			);
 			name = "Game Classes";
 			sourceTree = "<group>";
@@ -331,6 +334,14 @@
 				2445CBF91DF6CF670021FE46 /* Player 8.png */,
 			);
 			path = "3 - Player";
+			sourceTree = "<group>";
+		};
+		24904EAF1DF711D600D68E6F /* Background Class */ = {
+			isa = PBXGroup;
+			children = (
+				24904EAD1DF711BA00D68E6F /* BGClass.swift */,
+			);
+			name = "Background Class";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -453,6 +464,7 @@
 				2445CB611DF6A4170021FE46 /* GameplayScene.swift in Sources */,
 				2445CAFE1DF6A0A20021FE46 /* GameViewController.swift in Sources */,
 				2445CBC91DF6B6B90021FE46 /* Player.swift in Sources */,
+				24904EAE1DF711BA00D68E6F /* BGClass.swift in Sources */,
 				2445CAF61DF6A0A20021FE46 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

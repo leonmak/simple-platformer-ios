@@ -12,18 +12,19 @@ class GameplayScene: SKScene {
     
     var center: CGFloat?
     var player: Player?
+    var mainCamera: SKCameraNode?
     
     var canMove = false
     var moveLeft = false
     
     override func didMove(to view: SKView) {
-        center = (self.scene?.size.width)! / (self.scene?.size.height)!
-        player = self.childNode(withName: "Player") as? Player!
         
-        player?.initializePlayerAndAnimations()
+        initializeVariables()
+        
     }
     
     override func update(_ currentTime: TimeInterval) {
+        moveCamera()
         managePlayer()
     }
      
@@ -55,5 +56,20 @@ class GameplayScene: SKScene {
             player?.movePlayer(moveLeft)
         }
     }
+    
+    func initializeVariables() {
+        center = (self.scene?.size.width)! / (self.scene?.size.height)!
+        player = self.childNode(withName: "Player") as? Player!
+        
+        player?.initializePlayerAndAnimations()
+        
+        // Also change name in scene
+        mainCamera = self.childNode(withName: "Main Camera") as? SKCameraNode!
+    }
+    
+    func moveCamera() {
+        self.mainCamera?.position.y -= 3
+    }
+    
 }
 
