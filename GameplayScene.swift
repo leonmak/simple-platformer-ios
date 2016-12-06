@@ -10,15 +10,17 @@ import SpriteKit
 
 class GameplayScene: SKScene {
     
-    var player: Player?
     var center: CGFloat?
+    var player: Player?
+    
     var canMove = false
     var moveLeft = false
     
     override func didMove(to view: SKView) {
-        print("loaded gameplay scene")
         center = (self.scene?.size.width)! / (self.scene?.size.height)!
         player = self.childNode(withName: "Player") as? Player!
+        
+        player?.initializePlayerAndAnimations()
     }
     
     override func update(_ currentTime: TimeInterval) {
@@ -28,6 +30,7 @@ class GameplayScene: SKScene {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
         for touch in touches {
+            // If tap right half of screen go right, same for left
             let location = touch.location(in: self)
             
             if location.x > center! {
@@ -35,12 +38,16 @@ class GameplayScene: SKScene {
             } else {
                 moveLeft = true
             }
+            
+            player?.animatePlayer(moveLeft)
+            
         }
         canMove = true
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         canMove = false
+        player?.stopPlayerAnimation()
     }
     
     func managePlayer() {
