@@ -61,6 +61,8 @@
 		2445CC011DF6CF670021FE46 /* Player 8.png in Resources */ = {isa = PBXBuildFile; fileRef = 2445CBF91DF6CF670021FE46 /* Player 8.png */; };
 		24904EAE1DF711BA00D68E6F /* BGClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24904EAD1DF711BA00D68E6F /* BGClass.swift */; };
 		24DDDC581DF7A48D00861E8C /* CloudController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DDDC571DF7A48D00861E8C /* CloudController.swift */; };
+		24DDDC5C1DF7BA7600861E8C /* MainMenu.sks in Resources */ = {isa = PBXBuildFile; fileRef = 24DDDC5B1DF7BA7600861E8C /* MainMenu.sks */; };
+		24DDDC5E1DF7C21500861E8C /* MainMenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DDDC5D1DF7C21500861E8C /* MainMenuScene.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -120,6 +122,8 @@
 		2445CBF91DF6CF670021FE46 /* Player 8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Player 8.png"; sourceTree = "<group>"; };
 		24904EAD1DF711BA00D68E6F /* BGClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BGClass.swift; sourceTree = "<group>"; };
 		24DDDC571DF7A48D00861E8C /* CloudController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudController.swift; sourceTree = "<group>"; };
+		24DDDC5B1DF7BA7600861E8C /* MainMenu.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MainMenu.sks; sourceTree = "<group>"; };
+		24DDDC5D1DF7C21500861E8C /* MainMenuScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainMenuScene.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -293,6 +297,7 @@
 			isa = PBXGroup;
 			children = (
 				2445CB5C1DF6A2D80021FE46 /* GameplayScene.sks */,
+				24DDDC5B1DF7BA7600861E8C /* MainMenu.sks */,
 			);
 			name = Scenes;
 			sourceTree = "<group>";
@@ -312,6 +317,7 @@
 			isa = PBXGroup;
 			children = (
 				2445CB601DF6A4170021FE46 /* GameplayScene.swift */,
+				24DDDC5D1DF7C21500861E8C /* MainMenuScene.swift */,
 			);
 			name = "Scene Classes";
 			sourceTree = "<group>";
@@ -440,6 +446,7 @@
 				2445CBFA1DF6CF670021FE46 /* Player 1.png in Resources */,
 				2445CB451DF6A2430021FE46 /* Click Sound.wav in Resources */,
 				2445CB3C1DF6A2430021FE46 /* Show Score.png in Resources */,
+				24DDDC5C1DF7BA7600861E8C /* MainMenu.sks in Resources */,
 				2445CB431DF6A2430021FE46 /* blow.ttf in Resources */,
 				2445CB471DF6A2430021FE46 /* Life Sound.wav in Resources */,
 				2445CB011DF6A0A20021FE46 /* Main.storyboard in Resources */,
@@ -477,6 +484,7 @@
 				2445CAFE1DF6A0A20021FE46 /* GameViewController.swift in Sources */,
 				2445CBC91DF6B6B90021FE46 /* Player.swift in Sources */,
 				24904EAE1DF711BA00D68E6F /* BGClass.swift in Sources */,
+				24DDDC5E1DF7C21500861E8C /* MainMenuScene.swift in Sources */,
 				2445CAF61DF6A0A20021FE46 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
