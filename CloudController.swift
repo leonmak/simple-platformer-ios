@@ -37,9 +37,9 @@ class CloudsController {
             darkCloud.yScale = 0.9
             
             // add physics bodies to clouds
-            cloud1.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: cloud1.size.width - 5, height: cloud1.size.height - 6))
+            cloud1.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: cloud1.size.width - 5, height: cloud1.size.height - 6)) // resize physics body bounds
             cloud1.physicsBody?.affectedByGravity = false
-            cloud1.physicsBody?.restitution = 0
+            cloud1.physicsBody?.restitution = 0 // don't bounce on clouds
             cloud1.physicsBody?.categoryBitMask = ColliderType.CLOUD
             cloud1.physicsBody?.collisionBitMask = ColliderType.PLAYER
             

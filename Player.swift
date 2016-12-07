@@ -27,6 +27,16 @@ class Player: SKSpriteNode {
         // Initial
         self.texture = SKTexture(imageNamed: "Player 1")
         self.size = (self.texture?.size())!
+        
+        // Physics
+        self.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: self.size.width - 50, height: self.size.height - 5));
+        self.physicsBody?.affectedByGravity = true;
+        self.physicsBody?.allowsRotation = false; // don't rotate near the edge
+        self.physicsBody?.restitution = 0; // don't bounce player
+        self.physicsBody?.categoryBitMask = ColliderType.PLAYER;
+        self.physicsBody?.collisionBitMask = ColliderType.CLOUD;
+        self.physicsBody?.contactTestBitMask = ColliderType.DARK_CLOUD_AND_COLLECTABLES;
+
     }
     
     func animatePlayer(_ moveLeft: Bool) {
