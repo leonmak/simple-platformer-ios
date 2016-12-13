@@ -32,13 +32,16 @@ class GameplayScene: SKScene {
     private let distanceBetweenClouds = CGFloat(240);
     private let minX = CGFloat(-160);
     private let maxX = CGFloat(160);
-
+    
+    private var pausePanel: SKSpriteNode?;
+    
     override func didMove(to view: SKView) {
         initializeVariables()
     }
     
-    override func update(_ currentTime: TimeInterval) {
+    override func update(_  : TimeInterval) {
         moveCamera()
+        
         managePlayer()
         manageBackgrounds()
         createNewClouds()
@@ -58,6 +61,23 @@ class GameplayScene: SKScene {
             
             player?.animatePlayer(moveLeft)
             
+            if nodes(at: location)[0].name == "Pause" {
+                self.scene?.isPaused = true;
+                createPausePanel();
+            }
+            
+            if nodes(at: location)[0].name == "Resume" {
+                self.pausePanel?.removeFromParent();
+                self.scene?.isPaused = false;
+            }
+            
+            if nodes(at: location)[0].name == "Quit" {
+                let scene = MainMenuScene(fileNamed: "MainMenu");
+                scene?.scaleMode = SKSceneScaleMode.aspectFill;
+                self.view?.presentScene(scene!, transition: SKTransition.doorsCloseVertical(withDuration: 1));
+            }
+            
+
         }
         canMove = true
     }
@@ -113,5 +133,36 @@ class GameplayScene: SKScene {
             
         }
     }
+    
+    private func createPausePanel() {
+        
+        pausePanel = SKSpriteNode(imageNamed: "Pause Menu");
+        let resumeBtn = SKSpriteNode(imageNamed: "Resume Button");
+        let quitBtn = SKSpriteNode(imageNamed: "Quit Button 2");
+        
+        pausePanel?.anchorPoint = CGPoint(x: 0.5, y: 0.5);
+        pausePanel?.xScale = 1.6;
+        pausePanel?.yScale = 1.6;
+        pausePanel?.zPosition = 5;
+        
+        pausePanel?.position = CGPoint(x: self.mainCamera!.frame.size.width / 2, y: self.mainCamera!.frame.size.height / 2);
+        
+        resumeBtn.name = "Resume";
+        resumeBtn.zPosition = 6;
+        resumeBtn.anchorPoint = CGPoint(x: 0.5, y: 0.5);
+        resumeBtn.position = CGPoint(x: pausePanel!.position.x, y: pausePanel!.position.y + 25);
+        
+        quitBtn.name = "Quit";
+        quitBtn.zPosition = 6;
+        quitBtn.anchorPoint = CGPoint(x: 0.5, y: 0.5);
+        quitBtn.position = CGPoint(x: pausePanel!.position.x, y: pausePanel!.position.y - 45);
+        
+        pausePanel?.addChild(resumeBtn);
+        pausePanel?.addChild(quitBtn);
+        
+        self.mainCamera?.addChild(pausePanel!);
+        
+    }
+
 }
 
