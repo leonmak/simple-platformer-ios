@@ -64,6 +64,7 @@
 		247C4F001DF7C644000D7030 /* HighscoreScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247C4EFF1DF7C644000D7030 /* HighscoreScene.swift */; };
 		247C4F021DF7C8C6000D7030 /* OptionScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247C4F011DF7C8C6000D7030 /* OptionScene.swift */; };
 		24904EAE1DF711BA00D68E6F /* BGClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24904EAD1DF711BA00D68E6F /* BGClass.swift */; };
+		24A296A91E005FC1004378E6 /* GhoulFriAOE.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 24A296A81E005FC1004378E6 /* GhoulFriAOE.ttf */; };
 		24DDDC581DF7A48D00861E8C /* CloudController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DDDC571DF7A48D00861E8C /* CloudController.swift */; };
 		24DDDC5C1DF7BA7600861E8C /* MainMenu.sks in Resources */ = {isa = PBXBuildFile; fileRef = 24DDDC5B1DF7BA7600861E8C /* MainMenu.sks */; };
 		24DDDC5E1DF7C21500861E8C /* MainMenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DDDC5D1DF7C21500861E8C /* MainMenuScene.swift */; };
@@ -129,6 +130,7 @@
 		247C4EFF1DF7C644000D7030 /* HighscoreScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HighscoreScene.swift; sourceTree = "<group>"; };
 		247C4F011DF7C8C6000D7030 /* OptionScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionScene.swift; sourceTree = "<group>"; };
 		24904EAD1DF711BA00D68E6F /* BGClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BGClass.swift; sourceTree = "<group>"; };
+		24A296A81E005FC1004378E6 /* GhoulFriAOE.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = GhoulFriAOE.ttf; sourceTree = "<group>"; };
 		24DDDC571DF7A48D00861E8C /* CloudController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudController.swift; sourceTree = "<group>"; };
 		24DDDC5B1DF7BA7600861E8C /* MainMenu.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MainMenu.sks; sourceTree = "<group>"; };
 		24DDDC5D1DF7C21500861E8C /* MainMenuScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainMenuScene.swift; sourceTree = "<group>"; };
@@ -182,6 +184,7 @@
 		2445CB0D1DF6A1E40021FE46 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				24A296A81E005FC1004378E6 /* GhoulFriAOE.ttf */,
 				2445CBDD1DF6C8500021FE46 /* Player.atlas */,
 				2445CB0E1DF6A2430021FE46 /* 1 - Pause Panel And Buttons */,
 				2445CB131DF6A2430021FE46 /* 2 - Collectables */,
@@ -444,6 +447,7 @@
 				2445CB581DF6A2430021FE46 /* Quit Button.png in Resources */,
 				2445CB481DF6A2430021FE46 /* Game BG.png in Resources */,
 				2445CB3A1DF6A2430021FE46 /* Quit Button 2.png in Resources */,
+				24A296A91E005FC1004378E6 /* GhoulFriAOE.ttf in Resources */,
 				2445CB421DF6A2430021FE46 /* Dark Cloud.png in Resources */,
 				2445CB4E1DF6A2430021FE46 /* Score.png in Resources */,
 				2445CB501DF6A2430021FE46 /* Check Sign.png in Resources */,
