@@ -10,30 +10,30 @@ import SpriteKit
 
 class OptionScene: SKScene {
     
-    private var easyBtn: SKSpriteNode?;
-    private var mediumBtn: SKSpriteNode?;
-    private var hardBtn: SKSpriteNode?;
-    private var sign: SKSpriteNode?;
+    private var easyBtn: SKSpriteNode?
+    private var mediumBtn: SKSpriteNode?
+    private var hardBtn: SKSpriteNode?
+    private var sign: SKSpriteNode?
     
     override func didMove(to view: SKView) {
-        initializeVariables();
-        setSign();
+        initializeVariables()
+        setSign()
     }
     
     func initializeVariables() {
-        easyBtn = self.childNode(withName: "Easy") as? SKSpriteNode!;
-        mediumBtn = self.childNode(withName: "Medium") as? SKSpriteNode!;
-        hardBtn = self.childNode(withName: "Hard") as? SKSpriteNode!;
-        sign = self.childNode(withName: "Sign") as? SKSpriteNode!;
+        easyBtn = self.childNode(withName: "Easy") as? SKSpriteNode!
+        mediumBtn = self.childNode(withName: "Medium") as? SKSpriteNode!
+        hardBtn = self.childNode(withName: "Hard") as? SKSpriteNode!
+        sign = self.childNode(withName: "Sign") as? SKSpriteNode!
     }
     
     func setSign() {
         if GameDataManager.instance.getEasyDifficulty() == true {
-            sign?.position.y = (easyBtn?.position.y)!;
+            sign?.position.y = (easyBtn?.position.y)!
         } else if GameDataManager.instance.getMediumDifficulty() == true {
-            sign?.position.y = (mediumBtn?.position.y)!;
+            sign?.position.y = (mediumBtn?.position.y)!
         } else if GameDataManager.instance.getHardDifficulty() == true {
-            sign?.position.y = (hardBtn?.position.y)!;
+            sign?.position.y = (hardBtn?.position.y)!
         }
     }
 
@@ -41,7 +41,7 @@ class OptionScene: SKScene {
         
         for touch in touches {
             
-            let location = touch.location(in: self);
+            let location = touch.location(in: self)
             let name = "\(nodes(at: location)[0].name!)"
             
             switch(name) {
@@ -49,9 +49,9 @@ class OptionScene: SKScene {
                 setDifficulty(name)
                 
             case "Back":
-                let scene = MainMenuScene(fileNamed: "MainMenu");
-                scene?.scaleMode = SKSceneScaleMode.aspectFill;
-                self.view?.presentScene(scene!, transition: SKTransition.doorsCloseVertical(withDuration: 1));
+                let scene = MainMenuScene(fileNamed: "MainMenu")
+                scene?.scaleMode = SKSceneScaleMode.aspectFill
+                self.view?.presentScene(scene!, transition: SKTransition.doorsCloseVertical(withDuration: 1))
             
             default:
                 break
@@ -63,29 +63,29 @@ class OptionScene: SKScene {
         
         switch(difficulty) {
         case "Easy":
-            GameDataManager.instance.setEasyDifficulty(true);
-            GameDataManager.instance.setMediumDifficulty(false);
-            GameDataManager.instance.setHardDifficulty(false);
-            break;
+            GameDataManager.instance.setEasyDifficulty(true)
+            GameDataManager.instance.setMediumDifficulty(false)
+            GameDataManager.instance.setHardDifficulty(false)
+            break
             
         case "Medium":
-            GameDataManager.instance.setEasyDifficulty(false);
-            GameDataManager.instance.setMediumDifficulty(true);
-            GameDataManager.instance.setHardDifficulty(false);
-            break;
+            GameDataManager.instance.setEasyDifficulty(false)
+            GameDataManager.instance.setMediumDifficulty(true)
+            GameDataManager.instance.setHardDifficulty(false)
+            break
             
         case "Hard":
-            GameDataManager.instance.setEasyDifficulty(false);
-            GameDataManager.instance.setMediumDifficulty(false);
-            GameDataManager.instance.setHardDifficulty(true);
-            break;
+            GameDataManager.instance.setEasyDifficulty(false)
+            GameDataManager.instance.setMediumDifficulty(false)
+            GameDataManager.instance.setHardDifficulty(true)
+            break
             
         default:
-            break;
+            break
         }
         
         setSign()
-        GameDataManager.instance.saveData();
+        GameDataManager.instance.saveData()
     }
     
 }

@@ -9,9 +9,9 @@
 import SpriteKit
 
 struct ColliderType {
-    static let PLAYER: UInt32 = 0;
-    static let CLOUD: UInt32 = 1;
-    static let DARK_CLOUD_AND_COLLECTABLES: UInt32 = 2;
+    static let PLAYER: UInt32 = 0
+    static let CLOUD: UInt32 = 1
+    static let DARK_CLOUD_AND_COLLECTABLES: UInt32 = 2
 }
 
 class GameplayScene: SKScene {
@@ -27,17 +27,22 @@ class GameplayScene: SKScene {
     var isMovingLeft = false
     
     // For creating clouds
-    private let cloudsController = CloudsController();
-    private var cameraDistanceBeforeCreatingNewClouds = CGFloat();
-    private let distanceBetweenClouds = CGFloat(240);
-    private let minX = CGFloat(-160);
-    private let maxX = CGFloat(160);
+    private let cloudsController = CloudsController()
+    private var cameraDistanceBeforeCreatingNewClouds = CGFloat()
+    private let distanceBetweenClouds = CGFloat(240)
+    private let minX = CGFloat(-160)
+    private let maxX = CGFloat(160)
     
     // For player out-of-bounds
-    private let playerMinX = CGFloat(-214);
-    private let playerMaxX = CGFloat(214);
+    private let playerMinX = CGFloat(-214)
+    private let playerMaxX = CGFloat(214)
     
-    private var pausePanel: SKSpriteNode?;
+    private var pausePanel: SKSpriteNode?
+    
+    // Difficulty
+    private var acceleration = CGFloat()
+    private var cameraSpeed = CGFloat()
+    private var maxSpeed = CGFloat()
 
     // MARK: Initialize
 
@@ -66,7 +71,23 @@ class GameplayScene: SKScene {
         
         // Set instance labels before setting values to labels
         GameplayController.instance.initializeVariables()
-        
+        setCameraSpeed()
+    }
+    
+    private func setCameraSpeed() {
+        if GameDataManager.instance.getEasyDifficulty() {
+            acceleration = 0.001
+            cameraSpeed = 1.5
+            maxSpeed = 4
+        } else if GameDataManager.instance.getMediumDifficulty() {
+            acceleration = 0.002
+            cameraSpeed = 2
+            maxSpeed = 6
+        } else if GameDataManager.instance.getHardDifficulty() {
+            acceleration = 0.003
+            cameraSpeed = 2.5
+            maxSpeed = 8
+        }
     }
     
     private func setCamAndBG() {
@@ -77,9 +98,9 @@ class GameplayScene: SKScene {
     }
     
     private func setLabels() {
-        GameplayController.instance.scoreText = self.mainCamera?.childNode(withName: "Score Label") as? SKLabelNode!;
-        GameplayController.instance.coinText = self.mainCamera?.childNode(withName: "Coin Label") as? SKLabelNode!;
-        GameplayController.instance.lifeText = self.mainCamera?.childNode(withName: "Life Label") as? SKLabelNode!;
+        GameplayController.instance.scoreText = self.mainCamera?.childNode(withName: "Score Label") as? SKLabelNode!
+        GameplayController.instance.coinText = self.mainCamera?.childNode(withName: "Coin Label") as? SKLabelNode!
+        GameplayController.instance.lifeText = self.mainCamera?.childNode(withName: "Life Label") as? SKLabelNode!
     }
     
     
@@ -96,14 +117,22 @@ class GameplayScene: SKScene {
         managePlayer()
         moveBGs()
         
-        player?.setScore();
+        player?.setScore()
         
         // Cleanup
         rmvOutOfScreenChildren()
     }
         /// Decrease camera by 3
+    
     func manageCamera() {
-        self.mainCamera?.position.y -= 3
+        
+        // Accelation based on difficulty
+        cameraSpeed += acceleration
+        if cameraSpeed > maxSpeed {
+            cameraSpeed = maxSpeed
+        }
+        
+        self.mainCamera?.position.y -= cameraSpeed
     }
 
     func managePlayer() {
@@ -115,18 +144,18 @@ class GameplayScene: SKScene {
         
         // Restrict player
         if player!.position.x > playerMaxX {
-            player!.position.x = playerMaxX;
+            player!.position.x = playerMaxX
         }
         
         if player!.position.x < playerMinX {
-            player!.position.x = playerMinX;
+            player!.position.x = playerMinX
         }
         
         // Player fell and died, pause scene, deduct life
         if player!.position.y  > mainCamera!.position.y + (self.scene?.size.height)!/2 {
-            self.scene?.isPaused = true;
+            self.scene?.isPaused = true
             
-            GameplayController.instance.life -= 1;
+            GameplayController.instance.life -= 1
             
             if GameplayController.instance.life >= 0 {
                 GameplayController.instance.lifeText?.text = "x\(GameplayController.instance.life)"
@@ -134,13 +163,13 @@ class GameplayScene: SKScene {
                 createEndScorePanel()
             }
             
-            Timer.scheduledTimer(timeInterval: TimeInterval(2), target: self, selector: #selector(GameplayScene.playerDied), userInfo: nil, repeats: false);
+            Timer.scheduledTimer(timeInterval: TimeInterval(2), target: self, selector: #selector(GameplayScene.playerDied), userInfo: nil, repeats: false)
         }
         
         if player!.position.y + player!.size.height * 3.7 < mainCamera!.position.y {
-            self.scene?.isPaused = true;
+            self.scene?.isPaused = true
             
-            GameplayController.instance.life -= 1;
+            GameplayController.instance.life -= 1
             
             if GameplayController.instance.life >= 0 {
                 GameplayController.instance.lifeText?.text = "x\(GameplayController.instance.life)"
@@ -148,7 +177,7 @@ class GameplayScene: SKScene {
                 createEndScorePanel()
             }
             
-            Timer.scheduledTimer(timeInterval: TimeInterval(2), target: self, selector: #selector(GameplayScene.playerDied), userInfo: nil, repeats: false);
+            Timer.scheduledTimer(timeInterval: TimeInterval(2), target: self, selector: #selector(GameplayScene.playerDied), userInfo: nil, repeats: false)
         }
 
     }
@@ -162,9 +191,9 @@ class GameplayScene: SKScene {
     /// Create new clouds if mark > camera y position,
     private func createNewClouds(initialClouds: Bool) {
         if cameraDistanceBeforeCreatingNewClouds >= mainCamera!.position.y {
-           cameraDistanceBeforeCreatingNewClouds = mainCamera!.position.y - (self.scene?.size.height)!*3;
+           cameraDistanceBeforeCreatingNewClouds = mainCamera!.position.y - (self.scene?.size.height)!*3
             
-           cloudsController.arrangeCloudsInScene(scene: self.scene!, distaneBetweenClouds: distanceBetweenClouds, center: center!, minX: minX, maxX: maxX, player: player!, initialClouds: initialClouds);
+           cloudsController.arrangeCloudsInScene(scene: self.scene!, distaneBetweenClouds: distanceBetweenClouds, center: center!, minX: minX, maxX: maxX, player: player!, initialClouds: initialClouds)
             
         }
     }
@@ -172,56 +201,56 @@ class GameplayScene: SKScene {
     /// If have some life, go back to GameplayScene, else save data and go to HighScore scene.
     @objc private func playerDied() {
         if GameplayController.instance.life >= 0 {
-            GameDataManager.instance.gameRestartedPlayerDied = true;
+            GameDataManager.instance.gameRestartedPlayerDied = true
             
-            let scene = GameplayScene(fileNamed: "GameplayScene");
-            scene?.scaleMode = SKSceneScaleMode.aspectFill;
-            self.view?.presentScene(scene!, transition: SKTransition.doorsCloseVertical(withDuration: 1));
+            let scene = GameplayScene(fileNamed: "GameplayScene")
+            scene?.scaleMode = SKSceneScaleMode.aspectFill
+            self.view?.presentScene(scene!, transition: SKTransition.doorsCloseVertical(withDuration: 1))
             
         } else {
             if GameDataManager.instance.getEasyDifficulty() {
-                let highscore = GameDataManager.instance.getEasyDifficultyScore();
-                let coinScore = GameDataManager.instance.getEasyDifficultyCoinScore();
+                let highscore = GameDataManager.instance.getEasyDifficultyScore()
+                let coinScore = GameDataManager.instance.getEasyDifficultyCoinScore()
                 
                 if highscore < Int32(GameplayController.instance.score) {
-                    GameDataManager.instance.setEasyDifficultyScore(Int32(GameplayController.instance.score));
+                    GameDataManager.instance.setEasyDifficultyScore(Int32(GameplayController.instance.score))
                 }
                 
                 if coinScore < Int32(GameplayController.instance.coin) {
-                    GameDataManager.instance.setEasyDifficultyCoinScore(Int32(GameplayController.instance.coin));
+                    GameDataManager.instance.setEasyDifficultyCoinScore(Int32(GameplayController.instance.coin))
                 }
                 
             } else if GameDataManager.instance.getMediumDifficulty() {
-                let highscore = GameDataManager.instance.getMediumDifficultyScore();
-                let coinScore = GameDataManager.instance.getMediumDifficultyCoinScore();
+                let highscore = GameDataManager.instance.getMediumDifficultyScore()
+                let coinScore = GameDataManager.instance.getMediumDifficultyCoinScore()
                 
                 if highscore < Int32(GameplayController.instance.score) {
-                    GameDataManager.instance.setMediumDifficultyScore(Int32(GameplayController.instance.score));
+                    GameDataManager.instance.setMediumDifficultyScore(Int32(GameplayController.instance.score))
                 }
                 
                 if coinScore < Int32(GameplayController.instance.coin) {
-                    GameDataManager.instance.setMediumDifficultyCoinScore(Int32(GameplayController.instance.coin));
+                    GameDataManager.instance.setMediumDifficultyCoinScore(Int32(GameplayController.instance.coin))
                 }
                 
             } else if GameDataManager.instance.getHardDifficulty() {
-                let highscore = GameDataManager.instance.getHardDifficultyScore();
-                let coinScore = GameDataManager.instance.getHardDifficultyCoinScore();
+                let highscore = GameDataManager.instance.getHardDifficultyScore()
+                let coinScore = GameDataManager.instance.getHardDifficultyCoinScore()
                 
                 if highscore < Int32(GameplayController.instance.score) {
-                    GameDataManager.instance.setHardDifficultyScore(Int32(GameplayController.instance.score));
+                    GameDataManager.instance.setHardDifficultyScore(Int32(GameplayController.instance.score))
                 }
                 
                 if coinScore < Int32(GameplayController.instance.coin) {
-                    GameDataManager.instance.setHardDifficultyCoinScore(Int32(GameplayController.instance.coin));
+                    GameDataManager.instance.setHardDifficultyCoinScore(Int32(GameplayController.instance.coin))
                 }
                 
             }
             
-            GameDataManager.instance.saveData();
+            GameDataManager.instance.saveData()
             
-            let scene = MainMenuScene(fileNamed: "MainMenu");
-            scene?.scaleMode = SKSceneScaleMode.aspectFill;
-            self.view?.presentScene(scene!, transition: SKTransition.doorsCloseVertical(withDuration: 1));
+            let scene = MainMenuScene(fileNamed: "MainMenu")
+            scene?.scaleMode = SKSceneScaleMode.aspectFill
+            self.view?.presentScene(scene!, transition: SKTransition.doorsCloseVertical(withDuration: 1))
         }
     }
     
@@ -241,19 +270,19 @@ class GameplayScene: SKScene {
             player?.animatePlayer(isMovingLeft)
             
             if nodes(at: location)[0].name == "Pause" {
-                self.scene?.isPaused = true;
-                createPausePanel();
+                self.scene?.isPaused = true
+                createPausePanel()
             }
             
             if nodes(at: location)[0].name == "Resume" {
-                self.pausePanel?.removeFromParent();
-                self.scene?.isPaused = false;
+                self.pausePanel?.removeFromParent()
+                self.scene?.isPaused = false
             }
             
             if nodes(at: location)[0].name == "Quit" {
-                let scene = MainMenuScene(fileNamed: "MainMenu");
-                scene?.scaleMode = SKSceneScaleMode.aspectFill;
-                self.view?.presentScene(scene!, transition: SKTransition.doorsCloseVertical(withDuration: 1));
+                let scene = MainMenuScene(fileNamed: "MainMenu")
+                scene?.scaleMode = SKSceneScaleMode.aspectFill
+                self.view?.presentScene(scene!, transition: SKTransition.doorsCloseVertical(withDuration: 1))
             }
             
         }
@@ -269,62 +298,62 @@ class GameplayScene: SKScene {
     // MARK: Create Panels
     private func createPausePanel() {
         
-        pausePanel = SKSpriteNode(imageNamed: "Pause Menu");
-        let resumeBtn = SKSpriteNode(imageNamed: "Resume Button");
-        let quitBtn = SKSpriteNode(imageNamed: "Quit Button 2");
+        pausePanel = SKSpriteNode(imageNamed: "Pause Menu")
+        let resumeBtn = SKSpriteNode(imageNamed: "Resume Button")
+        let quitBtn = SKSpriteNode(imageNamed: "Quit Button 2")
         
-        pausePanel?.anchorPoint = CGPoint(x: 0.5, y: 0.5);
-        pausePanel?.xScale = 1.6;
-        pausePanel?.yScale = 1.6;
-        pausePanel?.zPosition = 5;
+        pausePanel?.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        pausePanel?.xScale = 1.6
+        pausePanel?.yScale = 1.6
+        pausePanel?.zPosition = 5
         
-        pausePanel?.position = CGPoint(x: self.mainCamera!.frame.size.width / 2, y: self.mainCamera!.frame.size.height / 2);
+        pausePanel?.position = CGPoint(x: self.mainCamera!.frame.size.width / 2, y: self.mainCamera!.frame.size.height / 2)
         
-        resumeBtn.name = "Resume";
-        resumeBtn.zPosition = 6;
-        resumeBtn.anchorPoint = CGPoint(x: 0.5, y: 0.5);
-        resumeBtn.position = CGPoint(x: pausePanel!.position.x, y: pausePanel!.position.y + 25);
+        resumeBtn.name = "Resume"
+        resumeBtn.zPosition = 6
+        resumeBtn.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        resumeBtn.position = CGPoint(x: pausePanel!.position.x, y: pausePanel!.position.y + 25)
         
-        quitBtn.name = "Quit";
-        quitBtn.zPosition = 6;
-        quitBtn.anchorPoint = CGPoint(x: 0.5, y: 0.5);
-        quitBtn.position = CGPoint(x: pausePanel!.position.x, y: pausePanel!.position.y - 45);
+        quitBtn.name = "Quit"
+        quitBtn.zPosition = 6
+        quitBtn.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        quitBtn.position = CGPoint(x: pausePanel!.position.x, y: pausePanel!.position.y - 45)
         
-        pausePanel?.addChild(resumeBtn);
-        pausePanel?.addChild(quitBtn);
+        pausePanel?.addChild(resumeBtn)
+        pausePanel?.addChild(quitBtn)
         
-        self.mainCamera?.addChild(pausePanel!);
+        self.mainCamera?.addChild(pausePanel!)
         
     }
 
     private func createEndScorePanel() {
-        let endScorePanel = SKSpriteNode(imageNamed: "Show Score");
-        let scoreLabel = SKLabelNode(fontNamed: "Blow");
-        let coinLabel = SKLabelNode(fontNamed: "Blow");
+        let endScorePanel = SKSpriteNode(imageNamed: "Show Score")
+        let scoreLabel = SKLabelNode(fontNamed: "Blow")
+        let coinLabel = SKLabelNode(fontNamed: "Blow")
         
-        endScorePanel.anchorPoint = CGPoint(x: 0.5, y: 0.5);
-        endScorePanel.zPosition = 8;
-        endScorePanel.xScale = 1.5;
-        endScorePanel.yScale = 1.5;
+        endScorePanel.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        endScorePanel.zPosition = 8
+        endScorePanel.xScale = 1.5
+        endScorePanel.yScale = 1.5
         
         scoreLabel.text = "x\(GameplayController.instance.score)"
         coinLabel.text = "x\(GameplayController.instance.coin)"
         
-        endScorePanel.addChild(scoreLabel);
-        endScorePanel.addChild(coinLabel);
+        endScorePanel.addChild(scoreLabel)
+        endScorePanel.addChild(coinLabel)
         
-        scoreLabel.fontSize = 50;
-        scoreLabel.zPosition = 7;
+        scoreLabel.fontSize = 50
+        scoreLabel.zPosition = 7
         
-        coinLabel.fontSize = 50;
-        coinLabel.zPosition = 7;
+        coinLabel.fontSize = 50
+        coinLabel.zPosition = 7
         
-        endScorePanel.position = CGPoint(x: mainCamera!.frame.size.width / 2, y: mainCamera!.frame.size.height / 2);
+        endScorePanel.position = CGPoint(x: mainCamera!.frame.size.width / 2, y: mainCamera!.frame.size.height / 2)
         
-        scoreLabel.position = CGPoint(x: endScorePanel.position.x - 60, y: endScorePanel.position.y + 10);
-        coinLabel.position = CGPoint(x: endScorePanel.position.x - 60, y: endScorePanel.position.y - 105);
+        scoreLabel.position = CGPoint(x: endScorePanel.position.x - 60, y: endScorePanel.position.y + 10)
+        coinLabel.position = CGPoint(x: endScorePanel.position.x - 60, y: endScorePanel.position.y - 105)
         
-        mainCamera?.addChild(endScorePanel);
+        mainCamera?.addChild(endScorePanel)
         
     }
 
@@ -333,11 +362,11 @@ class GameplayScene: SKScene {
         for child in children {
             if child.position.y > mainCamera!.position.y + self.scene!.size.height {
                 // Split string
-                let childName = child.name?.components(separatedBy: " ");
+                let childName = child.name?.components(separatedBy: " ")
                 
                 if childName![0] != "BG" {
                     print("rmv clouds/collectable: \(child.name!)")
-                    child.removeFromParent();
+                    child.removeFromParent()
                 }
                 
             }
