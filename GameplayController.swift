@@ -8,60 +8,64 @@
 
 import Foundation
 import SpriteKit
+
+/// Contains data for the labels of Distance score, Coin score, and life
+/// Uses GameDataManager to know if it should reset score
+
 class GameplayController {
     
-    static let instance = GameplayController();
+    // Singleton
+    static let instance = GameplayController()
     private init() {}
 
-    var scoreText: SKLabelNode?;
-    var coinText: SKLabelNode?;
-    var lifeText: SKLabelNode?;
+    var scoreText: SKLabelNode?
+    var coinText: SKLabelNode?
+    var lifeText: SKLabelNode?
 
-    var score: Int = 0;
-    var coin: Int = 0;
-    var life: Int = 0;
+    var score: Int = 0
+    var coin: Int = 0
+    var life: Int = 0
 
     func initializeVariables() {
-        if GameManager.instance.gameStartedFromMainMenu {
+        
+        if GameDataManager.instance.gameStartedFromMainMenu {
+            GameDataManager.instance.gameStartedFromMainMenu = false
             
-            GameManager.instance.gameStartedFromMainMenu = false;
+            score = -1
+            coin = 0
+            life = 3
             
-            score = -1;
-            coin = 0;
-            life = 3;
+            scoreText?.text = "\(score)"
+            coinText?.text = "x\(coin)"
+            lifeText?.text = "x\(life)"
             
-            scoreText?.text = "\(score)";
-            coinText?.text = "x\(coin)";
-            lifeText?.text = "x\(life)";
+        } else if GameDataManager.instance.gameRestartedPlayerDied {
+            GameDataManager.instance.gameRestartedPlayerDied = false
             
-        } else if GameManager.instance.gameRestartedPlayerDied {
-            
-            GameManager.instance.gameRestartedPlayerDied = false;
-            
-            scoreText?.text = "\(score)";
-            coinText?.text = "x\(coin)";
-            lifeText?.text = "x\(life)";
+            scoreText?.text = "\(score)"
+            coinText?.text = "x\(coin)"
+            lifeText?.text = "x\(life)"
         }
     }
     
     func incrementScore() {
-        score += 1;
+        score += 1
         scoreText?.text = "\(score)"
     }
     
     func incrementCoin() {
-        coin += 1;
+        coin += 1
         
-        score += 200;
+        score += 200
         
         coinText?.text = "x\(coin)"
         scoreText?.text = "\(score)"
     }
     
     func incrementLife() {
-        life += 1;
+        life += 1
         
-        score += 300;
+        score += 300
         
         lifeText?.text = "x\(life)"
         scoreText?.text = "\(score)"

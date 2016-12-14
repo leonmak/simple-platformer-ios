@@ -11,18 +11,21 @@ import Foundation
 class GameData: NSObject, NSCoding {
     
     struct Keys {
+        
+        // Distance Score for each difficulty
         static let EasyDifficultyScore = "EasyDifficultyScore";
         static let MediumDifficultyScore = "MediumDifficultyScore";
         static let HardDifficultyScore = "HardDifficultyScore";
         
+        // Coin Score for each difficulty
         static let EasyDifficultyCoinScore = "EasyDifficultyCoinScore";
         static let MediumDifficultyCoinScore = "MediumDifficultyCoinScore";
         static let HardDifficultyCoinScore = "HardDifficultyCoinScore";
         
+        // User Settings
         static let EasyDifficulty = "EasyDifficulty";
         static let MediumDifficulty = "MediumDifficulty";
         static let HardDifficulty = "HardDifficulty";
-        
         static let Music = "Music";
     }
     
@@ -37,19 +40,20 @@ class GameData: NSObject, NSCoding {
     fileprivate var easyDifficulty = false;
     fileprivate var mediumDifficulty = false;
     fileprivate var hardDifficulty = false;
-    
     fileprivate var isMusicOn = false;
     
     override init() {}
     
+    // MARK: NSCoding
+    
+    /// Set Game Data values from extracting object's values.
+    /// Called by NSKeyedUnarchiver.unarchiveObject in loadFile in Game Manager
     required init?(coder aDecoder: NSCoder) {
-        //        super.init();
         
         self.easyDifficultyScore = aDecoder.decodeInt32(forKey: Keys.EasyDifficultyScore);
         self.easyDifficultyCoinScore = aDecoder.decodeInt32(forKey: Keys.EasyDifficultyCoinScore);
         
         self.mediumDifficultyScore = aDecoder.decodeInt32(forKey: Keys.MediumDifficultyScore);
-        
         self.mediumDifficultyCoinScore = aDecoder.decodeInt32(forKey: Keys.MediumDifficultyCoinScore);
         
         self.hardDifficultyScore = aDecoder.decodeInt32(forKey: Keys.HardDifficultyScore);
@@ -58,29 +62,25 @@ class GameData: NSObject, NSCoding {
         self.easyDifficulty = aDecoder.decodeBool(forKey: Keys.EasyDifficulty);
         self.mediumDifficulty = aDecoder.decodeBool(forKey: Keys.MediumDifficulty);
         self.hardDifficulty = aDecoder.decodeBool(forKey: Keys.HardDifficulty);
-        
         self.isMusicOn = aDecoder.decodeBool(forKey: Keys.Music);
         
     }
-    
+
+    /// Called by NSKeyedArchiver.archiveRootObject in saveFile in GameDataManager.
     func encode(with aCoder: NSCoder) {
         
         aCoder.encodeCInt(self.easyDifficultyScore, forKey: Keys.EasyDifficultyScore);
-        
         aCoder.encodeCInt(self.easyDifficultyCoinScore, forKey: Keys.EasyDifficultyCoinScore);
         
         aCoder.encodeCInt(self.mediumDifficultyScore, forKey: Keys.MediumDifficultyScore);
-        
         aCoder.encodeCInt(self.mediumDifficultyCoinScore, forKey: Keys.MediumDifficultyCoinScore);
         
         aCoder.encodeCInt(self.hardDifficultyScore, forKey: Keys.HardDifficultyScore);
-        
         aCoder.encodeCInt(self.hardDifficultyCoinScore, forKey: Keys.HardDifficultyCoinScore);
         
         aCoder.encode(self.easyDifficulty, forKey: Keys.EasyDifficulty);
         aCoder.encode(self.mediumDifficulty, forKey: Keys.MediumDifficulty);
         aCoder.encode(self.hardDifficulty, forKey: Keys.HardDifficulty);
-        
         aCoder.encode(self.isMusicOn, forKey: Keys.Music);
         
     }

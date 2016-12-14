@@ -19,10 +19,12 @@ class CloudsController {
         var clouds = createClouds()
         
         // Don't want initial cloud to be dark
+        print(initialClouds)
         if initialClouds {
             while(clouds[0].name == "Dark Cloud") {
                 clouds = shuffle(cloudsArray: clouds)
             }
+            print("\(clouds[0].name)")
         }
         
         var positionY = CGFloat()
@@ -42,12 +44,12 @@ class CloudsController {
             
             var randomX = CGFloat()
             
-            // Put cloud on right side
+            // Put cloud on left side
             if random == 0 {
-                randomX = randomBetweenNumbers(firstNum: center + 90, secondNum: maxX)
-                random = 1 // Next iter put on left side
-            } else {
                 randomX = randomBetweenNumbers(firstNum: center - 90, secondNum: minX)
+                random = 1 // Next iter put on right side
+            } else {
+                randomX = randomBetweenNumbers(firstNum: center + 90, secondNum: maxX)
                 random = 0
             }
             
