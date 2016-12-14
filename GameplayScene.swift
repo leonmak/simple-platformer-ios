@@ -24,8 +24,8 @@ class GameplayScene: SKScene {
     var bg2: BGClass?
     var bg3: BGClass?
     
-    var canMove = false
-    var moveLeft = false
+    var isMoving = false
+    var isMovingLeft = false
     
     private let cloudsController = CloudsController();
     private var cameraDistanceBeforeCreatingNewClouds = CGFloat();
@@ -39,14 +39,21 @@ class GameplayScene: SKScene {
         initializeVariables()
     }
     
+    // Game progresses by moving camera,
     override func update(_  : TimeInterval) {
         moveCamera()
+        createNewClouds(initialClouds: false)
         
-        managePlayer()
-        manageBackgrounds()
-        createNewClouds()
+        animatePlayer()
+        moveBGs()
+        
+        player?.setScore();
+        
+        // Cleanup
+        rmvOutOfScreenChildren()
     }
-     
+    
+    // MARK: Touches handler
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
         for touch in touches {
@@ -54,12 +61,12 @@ class GameplayScene: SKScene {
             let location = touch.location(in: self)
             
             if location.x > center! {
-                moveLeft = false
+                isMovingLeft = false
             } else {
-                moveLeft = true
+                isMovingLeft = true
             }
             
-            player?.animatePlayer(moveLeft)
+            player?.animatePlayer(isMovingLeft)
             
             if nodes(at: location)[0].name == "Pause" {
                 self.scene?.isPaused = true;
@@ -79,57 +86,78 @@ class GameplayScene: SKScene {
             
 
         }
-        canMove = true
+        isMoving = true
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        canMove = false
+        isMoving = false
         player?.stopPlayerAnimation()
     }
     
-    func managePlayer() {
-        if canMove {
-            player?.movePlayer(moveLeft)
+    // MARK: Manage player, bg, camera
+    /// Animate if player is moving
+    func animatePlayer() {
+        if isMoving {
+            player?.movePlayer(isMovingLeft)
         }
     }
     
-    func initializeVariables() {
-        center = (self.scene?.size.width)! / (self.scene?.size.height)!
-        player = self.childNode(withName: "Player") as? Player!
-        
-        player?.initializePlayerAndAnimations()
-        
-        // Also change name in scene
-        mainCamera = self.childNode(withName: "Main Camera") as? SKCameraNode!
-        
-        getBackgrounds()
-        
-        cloudsController.arrangeCloudsInScene(scene: self.scene!, distaneBetweenClouds: distanceBetweenClouds, center: center!, minX: minX, maxX: maxX, player: player! , initialClouds: false);
-        
-    }
-    
-    func moveCamera() {
-        self.mainCamera?.position.y -= 3
-    }
-    
-    func getBackgrounds() {
-        bg1 = self.childNode(withName: "BG 1") as? BGClass!
-        bg2 = self.childNode(withName: "BG 2") as? BGClass!
-        bg3 = self.childNode(withName: "BG 3") as? BGClass!
-    }
-    
-    func manageBackgrounds() {
+    func moveBGs() {
         bg1?.moveBG(mainCamera!)
         bg2?.moveBG(mainCamera!)
         bg3?.moveBG(mainCamera!)
     }
     
-    private func createNewClouds() {
+    func initializeVariables() {
+        
+        // Select main camera in scene
+        configureSceneElements()
+        
+        // Initialize clouds w/o collectables
+        createNewClouds(initialClouds: true)
+
+    }
+    
+    /// Decrease camera by 3
+    func moveCamera() {
+        self.mainCamera?.position.y -= 3
+    }
+    
+    private func configureSceneElements() {
+        center = (self.scene?.size.width)! / (self.scene?.size.height)!
+
+        player = self.childNode(withName: "Player") as? Player!
+        player?.initializePlayerAndAnimations()
+        
+        setCamAndBG()
+        setLabels()
+        
+        // Set instance labels before setting values to labels
+        GameplayController.instance.initializeVariables()
+        
+    }
+    
+    private func setCamAndBG() {
+        mainCamera = self.childNode(withName: "Main Camera") as? SKCameraNode!
+        bg1 = self.childNode(withName: "BG 1") as? BGClass!
+        bg2 = self.childNode(withName: "BG 2") as? BGClass!
+        bg3 = self.childNode(withName: "BG 3") as? BGClass!
+    }
+    
+    private func setLabels() {
+        GameplayController.instance.scoreText = self.mainCamera?.childNode(withName: "Score Label") as? SKLabelNode!;
+        GameplayController.instance.coinText = self.mainCamera?.childNode(withName: "Coin Label") as? SKLabelNode!;
+        GameplayController.instance.lifeText = self.mainCamera?.childNode(withName: "Life Label") as? SKLabelNode!;
+    }
+    
+    /// Create new clouds if mark > camera y position,
+    private func createNewClouds(initialClouds: Bool) {
+        print(cameraDistanceBeforeCreatingNewClouds)
+        print("main cam: \(mainCamera!.position.y)")
         if cameraDistanceBeforeCreatingNewClouds > mainCamera!.position.y {
+           cameraDistanceBeforeCreatingNewClouds = mainCamera!.position.y - (self.scene?.size.height)!*3;
             
-            cameraDistanceBeforeCreatingNewClouds = mainCamera!.position.y - 400;
-            
-            cloudsController.arrangeCloudsInScene(scene: self.scene!, distaneBetweenClouds: distanceBetweenClouds, center: center!, minX: minX, maxX: maxX, player: player! , initialClouds: false);
+           cloudsController.arrangeCloudsInScene(scene: self.scene!, distaneBetweenClouds: distanceBetweenClouds, center: center!, minX: minX, maxX: maxX, player: player!, initialClouds: initialClouds);
             
         }
     }
@@ -163,6 +191,22 @@ class GameplayScene: SKScene {
         self.mainCamera?.addChild(pausePanel!);
         
     }
-
+    
+    private func rmvOutOfScreenChildren() {
+        for child in children {
+            if child.position.y > mainCamera!.position.y + self.scene!.size.height {
+                print("\(child.name): \(child.position.y)")
+                // Split string
+                let childName = child.name?.components(separatedBy: " ");
+                
+                if childName![0] != "BG" {
+                    print("rmv clouds/collectable: \(child.name)")
+                    child.removeFromParent();
+                }
+                
+            }
+        }
+    }
+    
 }
 

@@ -15,6 +15,8 @@ class MainMenuScene: SKScene {
 
     override func didMove(to view: SKView) {
         highscoreBtn = self.childNode(withName: "Highscore") as? SKSpriteNode!
+        
+        GameManager.instance.initializeGameData();
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -23,6 +25,9 @@ class MainMenuScene: SKScene {
             let location = touch.location(in: self)
             
             if nodes(at: location)[0].name == "Start Game" {
+                
+                // Reset the score data
+                GameManager.instance.gameStartedFromMainMenu = true;
                 
                 let scene = GameplayScene(fileNamed: "GameplayScene");
                 scene?.scaleMode = SKSceneScaleMode.aspectFill;
