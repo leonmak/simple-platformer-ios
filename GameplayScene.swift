@@ -16,6 +16,7 @@ class GameplayScene: SKScene, SKPhysicsContactDelegate {
     var bg1: BGClass?
     var bg2: BGClass?
     var bg3: BGClass?
+    var pauseBtn: SKSpriteNode?
     
     var isMoving = false
     var isMovingLeft = false
@@ -31,6 +32,7 @@ class GameplayScene: SKScene, SKPhysicsContactDelegate {
     private let playerMinX = CGFloat(-214)
     private let playerMaxX = CGFloat(214)
     
+    // Pause
     private var pausePanel: SKSpriteNode?
     
     // Difficulty
@@ -57,13 +59,14 @@ class GameplayScene: SKScene, SKPhysicsContactDelegate {
     }
     
     private func configureSceneElements() {
+        
+        setCamAndBG()
+        
         center = (self.scene?.size.width)! / (self.scene?.size.height)!
         
         player = self.childNode(withName: "Player") as? Player!
         player?.initializePlayerAndAnimations()
         
-        setCamAndBG()
-        setLabels()
         
         // Set instance labels before setting values to labels
         GameplayController.instance.initializeVariables()
@@ -91,12 +94,15 @@ class GameplayScene: SKScene, SKPhysicsContactDelegate {
         bg1 = self.childNode(withName: "BG 1") as? BGClass!
         bg2 = self.childNode(withName: "BG 2") as? BGClass!
         bg3 = self.childNode(withName: "BG 3") as? BGClass!
+        
+        setCameraChildren()
     }
     
-    private func setLabels() {
+    private func setCameraChildren() {
         GameplayController.instance.scoreText = self.mainCamera?.childNode(withName: "Score Label") as? SKLabelNode!
         GameplayController.instance.coinText = self.mainCamera?.childNode(withName: "Coin Label") as? SKLabelNode!
         GameplayController.instance.lifeText = self.mainCamera?.childNode(withName: "Life Label") as? SKLabelNode!
+        pauseBtn = self.mainCamera?.childNode(withName: "Pause") as? SKSpriteNode!
     }
     
     
@@ -152,12 +158,13 @@ class GameplayScene: SKScene, SKPhysicsContactDelegate {
             
             GameplayController.instance.life -= 1
             
-            if GameplayController.instance.life >= 0 {
+            if GameplayController.instance.life > 0 {
                 GameplayController.instance.lifeText?.text = "x\(GameplayController.instance.life)"
             } else {
                 createEndScorePanel()
             }
             
+            // Go to the panel 2 seconds after showing scocre
             Timer.scheduledTimer(timeInterval: TimeInterval(2), target: self, selector: #selector(GameplayScene.playerDied), userInfo: nil, repeats: false)
         }
         
@@ -166,7 +173,7 @@ class GameplayScene: SKScene, SKPhysicsContactDelegate {
             
             GameplayController.instance.life -= 1
             
-            if GameplayController.instance.life >= 0 {
+            if GameplayController.instance.life > 0 {
                 GameplayController.instance.lifeText?.text = "x\(GameplayController.instance.life)"
             } else {
                 createEndScorePanel()
@@ -195,7 +202,7 @@ class GameplayScene: SKScene, SKPhysicsContactDelegate {
     
     /// If have some life, go back to GameplayScene, else save data and go to HighScore scene.
     @objc private func playerDied() {
-        if GameplayController.instance.life >= 0 {
+        if GameplayController.instance.life > 0 {
             GameDataManager.instance.gameRestartedPlayerDied = true
             
             let scene = GameplayScene(fileNamed: "GameplayScene")
@@ -266,12 +273,14 @@ class GameplayScene: SKScene, SKPhysicsContactDelegate {
             
             if nodes(at: location)[0].name == "Pause" {
                 self.scene?.isPaused = true
+                pauseBtn?.isHidden = true
                 createPausePanel()
             }
             
             if nodes(at: location)[0].name == "Resume" {
                 self.pausePanel?.removeFromParent()
                 self.scene?.isPaused = false
+                pauseBtn?.isHidden = false
             }
             
             if nodes(at: location)[0].name == "Quit" {
@@ -323,8 +332,8 @@ class GameplayScene: SKScene, SKPhysicsContactDelegate {
 
     private func createEndScorePanel() {
         let endScorePanel = SKSpriteNode(imageNamed: "Show Score")
-        let scoreLabel = SKLabelNode(fontNamed: "Blow")
-        let coinLabel = SKLabelNode(fontNamed: "Blow")
+        let scoreLabel = SKLabelNode(fontNamed: "Ghoulish Fright AOE")
+        let coinLabel = SKLabelNode(fontNamed: "Ghoulish Fright AOE")
         
         endScorePanel.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         endScorePanel.zPosition = 8
@@ -360,7 +369,7 @@ class GameplayScene: SKScene, SKPhysicsContactDelegate {
                 let childName = child.name?.components(separatedBy: " ")
                 
                 if childName![0] != "BG" {
-                    print("rmv clouds/collectable: \(child.name!)")
+                    
                     child.removeFromParent()
                 }
                 
