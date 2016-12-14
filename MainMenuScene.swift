@@ -10,12 +10,7 @@ import SpriteKit
 
 class MainMenuScene: SKScene {
     
-    var highscoreBtn: SKSpriteNode?
-    
-
     override func didMove(to view: SKView) {
-        highscoreBtn = self.childNode(withName: "Highscore") as? SKSpriteNode!
-        
         GameDataManager.instance.initializeGameData();
     }
     
@@ -34,14 +29,14 @@ class MainMenuScene: SKScene {
                 self.view?.presentScene(scene!, transition: SKTransition.doorsCloseVertical(withDuration: 1));
             }
             
-            if nodes(at: location)[0] == highscoreBtn {
+            if nodes(at: location)[0].name == "Highscore" {
                 let scene = HighscoreScene(fileNamed: "HighscoreScene")
                 scene!.scaleMode = .aspectFill
                 self.view?.presentScene(scene!, transition: SKTransition.doorsOpenVertical(withDuration: 0.9))
             }
             
-            if nodes(at: location)[0].name == "Option" {
-                let scene = HighscoreScene(fileNamed: "OptionScene")
+            if nodes(at: location)[0].name == "Options" {
+                let scene = OptionScene(fileNamed: "OptionScene")
                 scene!.scaleMode = .aspectFill
                 self.view?.presentScene(scene!, transition: SKTransition.doorsOpenVertical(withDuration: 0.9))
             }
