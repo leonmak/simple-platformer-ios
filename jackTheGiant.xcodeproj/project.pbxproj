@@ -49,7 +49,7 @@
 		2445CB591DF6A2430021FE46 /* Start Game Button.png in Resources */ = {isa = PBXBuildFile; fileRef = 2445CB381DF6A2430021FE46 /* Start Game Button.png */; };
 		2445CB5D1DF6A2D80021FE46 /* GameplayScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 2445CB5C1DF6A2D80021FE46 /* GameplayScene.sks */; };
 		2445CB611DF6A4170021FE46 /* GameplayScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2445CB601DF6A4170021FE46 /* GameplayScene.swift */; };
-		2445CBC91DF6B6B90021FE46 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2445CBC81DF6B6B90021FE46 /* Player.swift */; };
+		2445CBC91DF6B6B90021FE46 /* PlayerClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2445CBC81DF6B6B90021FE46 /* PlayerClass.swift */; };
 		2445CBDE1DF6C8500021FE46 /* Player.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 2445CBDD1DF6C8500021FE46 /* Player.atlas */; };
 		2445CBFA1DF6CF670021FE46 /* Player 1.png in Resources */ = {isa = PBXBuildFile; fileRef = 2445CBF21DF6CF670021FE46 /* Player 1.png */; };
 		2445CBFB1DF6CF670021FE46 /* Player 2.png in Resources */ = {isa = PBXBuildFile; fileRef = 2445CBF31DF6CF670021FE46 /* Player 2.png */; };
@@ -63,6 +63,7 @@
 		247C4EFE1DF7C533000D7030 /* OptionScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 247C4EFD1DF7C533000D7030 /* OptionScene.sks */; };
 		247C4F001DF7C644000D7030 /* HighscoreScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247C4EFF1DF7C644000D7030 /* HighscoreScene.swift */; };
 		247C4F021DF7C8C6000D7030 /* OptionScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247C4F011DF7C8C6000D7030 /* OptionScene.swift */; };
+		248C2C3C1E014EF200BFEBC4 /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 248C2C3B1E014EF200BFEBC4 /* AudioManager.swift */; };
 		24904EAE1DF711BA00D68E6F /* BGClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24904EAD1DF711BA00D68E6F /* BGClass.swift */; };
 		24A296A91E005FC1004378E6 /* GhoulFriAOE.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 24A296A81E005FC1004378E6 /* GhoulFriAOE.ttf */; };
 		24A296AC1E006213004378E6 /* GameplayController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A296AB1E006213004378E6 /* GameplayController.swift */; };
@@ -119,7 +120,7 @@
 		2445CB381DF6A2430021FE46 /* Start Game Button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Start Game Button.png"; sourceTree = "<group>"; };
 		2445CB5C1DF6A2D80021FE46 /* GameplayScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameplayScene.sks; sourceTree = "<group>"; };
 		2445CB601DF6A4170021FE46 /* GameplayScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameplayScene.swift; sourceTree = "<group>"; };
-		2445CBC81DF6B6B90021FE46 /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		2445CBC81DF6B6B90021FE46 /* PlayerClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerClass.swift; sourceTree = "<group>"; };
 		2445CBDD1DF6C8500021FE46 /* Player.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Player.atlas; sourceTree = "<group>"; };
 		2445CBF21DF6CF670021FE46 /* Player 1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Player 1.png"; sourceTree = "<group>"; };
 		2445CBF31DF6CF670021FE46 /* Player 2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Player 2.png"; sourceTree = "<group>"; };
@@ -133,6 +134,7 @@
 		247C4EFD1DF7C533000D7030 /* OptionScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = OptionScene.sks; sourceTree = "<group>"; };
 		247C4EFF1DF7C644000D7030 /* HighscoreScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HighscoreScene.swift; sourceTree = "<group>"; };
 		247C4F011DF7C8C6000D7030 /* OptionScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionScene.swift; sourceTree = "<group>"; };
+		248C2C3B1E014EF200BFEBC4 /* AudioManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
 		24904EAD1DF711BA00D68E6F /* BGClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BGClass.swift; sourceTree = "<group>"; };
 		24A296A81E005FC1004378E6 /* GhoulFriAOE.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = GhoulFriAOE.ttf; sourceTree = "<group>"; };
 		24A296AB1E006213004378E6 /* GameplayController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameplayController.swift; sourceTree = "<group>"; };
@@ -327,11 +329,9 @@
 		2445CB5E1DF6A3E50021FE46 /* Game Classes */ = {
 			isa = PBXGroup;
 			children = (
+				248C2C3A1E014E1500BFEBC4 /* Game Sprite Classes */,
 				24A296AF1E006541004378E6 /* Game Data Class */,
 				24A296AA1E0061F9004378E6 /* Game Controllers & Managers */,
-				24DDDC5A1DF7A49800861E8C /* Cloud Classes */,
-				24904EAF1DF711D600D68E6F /* Background Class */,
-				2445CBC71DF6B6950021FE46 /* Player Class */,
 			);
 			name = "Game Classes";
 			sourceTree = "<group>";
@@ -345,14 +345,6 @@
 				247C4F011DF7C8C6000D7030 /* OptionScene.swift */,
 			);
 			name = "Scene Classes";
-			sourceTree = "<group>";
-		};
-		2445CBC71DF6B6950021FE46 /* Player Class */ = {
-			isa = PBXGroup;
-			children = (
-				2445CBC81DF6B6B90021FE46 /* Player.swift */,
-			);
-			name = "Player Class";
 			sourceTree = "<group>";
 		};
 		2445CBF11DF6CF670021FE46 /* 3 - Player */ = {
@@ -370,12 +362,15 @@
 			path = "3 - Player";
 			sourceTree = "<group>";
 		};
-		24904EAF1DF711D600D68E6F /* Background Class */ = {
+		248C2C3A1E014E1500BFEBC4 /* Game Sprite Classes */ = {
 			isa = PBXGroup;
 			children = (
+				24DDDC571DF7A48D00861E8C /* CloudController.swift */,
+				24A296B21E010466004378E6 /* CollectablesController.swift */,
 				24904EAD1DF711BA00D68E6F /* BGClass.swift */,
+				2445CBC81DF6B6B90021FE46 /* PlayerClass.swift */,
 			);
-			name = "Background Class";
+			name = "Game Sprite Classes";
 			sourceTree = "<group>";
 		};
 		24A296AA1E0061F9004378E6 /* Game Controllers & Managers */ = {
@@ -383,6 +378,7 @@
 			children = (
 				24A296AB1E006213004378E6 /* GameplayController.swift */,
 				24A296AD1E0064BA004378E6 /* GameDataManager.swift */,
+				248C2C3B1E014EF200BFEBC4 /* AudioManager.swift */,
 			);
 			name = "Game Controllers & Managers";
 			sourceTree = "<group>";
@@ -393,15 +389,6 @@
 				24A296B01E006560004378E6 /* GameData.swift */,
 			);
 			name = "Game Data Class";
-			sourceTree = "<group>";
-		};
-		24DDDC5A1DF7A49800861E8C /* Cloud Classes */ = {
-			isa = PBXGroup;
-			children = (
-				24DDDC571DF7A48D00861E8C /* CloudController.swift */,
-				24A296B21E010466004378E6 /* CollectablesController.swift */,
-			);
-			name = "Cloud Classes";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -533,7 +520,8 @@
 				24A296AE1E0064BA004378E6 /* GameDataManager.swift in Sources */,
 				2445CAFE1DF6A0A20021FE46 /* GameViewController.swift in Sources */,
 				247C4F021DF7C8C6000D7030 /* OptionScene.swift in Sources */,
-				2445CBC91DF6B6B90021FE46 /* Player.swift in Sources */,
+				248C2C3C1E014EF200BFEBC4 /* AudioManager.swift in Sources */,
+				2445CBC91DF6B6B90021FE46 /* PlayerClass.swift in Sources */,
 				24904EAE1DF711BA00D68E6F /* BGClass.swift in Sources */,
 				24A296AC1E006213004378E6 /* GameplayController.swift in Sources */,
 				24DDDC5E1DF7C21500861E8C /* MainMenuScene.swift in Sources */,

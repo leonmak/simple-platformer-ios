@@ -1,5 +1,5 @@
 //
-//  Player.swift
+//  PlayerClass.swift
 //  jackTheGiant
 //
 //  Created by Leon on 6/12/16.

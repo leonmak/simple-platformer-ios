@@ -39,7 +39,7 @@ class GameDataManager {
             gameData?.setEasyDifficulty(false)
             gameData?.setMediumDifficulty(true)
             gameData?.setHardDifficulty(false)
-            gameData?.setIsMusicOn(false)
+            gameData?.setIsMusicOn(true)
             
             saveData()
         } else {
