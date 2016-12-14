@@ -9,6 +9,12 @@
 import Foundation
 import SpriteKit
 
+struct ColliderType {
+    static let PLAYER: UInt32 = 0
+    static let CLOUD: UInt32 = 1
+    static let DARK_CLOUD_AND_COLLECTABLES: UInt32 = 2
+}
+
 /// Contains data for the labels of Distance score, Coin score, and life
 /// Uses GameDataManager to know if it should reset score
 

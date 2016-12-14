@@ -8,13 +8,7 @@
 
 import SpriteKit
 
-struct ColliderType {
-    static let PLAYER: UInt32 = 0
-    static let CLOUD: UInt32 = 1
-    static let DARK_CLOUD_AND_COLLECTABLES: UInt32 = 2
-}
-
-class GameplayScene: SKScene {
+class GameplayScene: SKScene, SKPhysicsContactDelegate {
     
     var center: CGFloat?
     var player: Player?
@@ -48,6 +42,8 @@ class GameplayScene: SKScene {
 
     override func didMove(to view: SKView) {
         initializeVariables()
+        
+        physicsWorld.contactDelegate = self;
     }
     
     func initializeVariables() {
@@ -122,11 +118,10 @@ class GameplayScene: SKScene {
         // Cleanup
         rmvOutOfScreenChildren()
     }
-        /// Decrease camera by 3
     
+    /// Decrease camera based on difficulty
     func manageCamera() {
-        
-        // Accelation based on difficulty
+
         cameraSpeed += acceleration
         if cameraSpeed > maxSpeed {
             cameraSpeed = maxSpeed
@@ -372,6 +367,52 @@ class GameplayScene: SKScene {
             }
         }
     }
+
+    // MARK: Physics
     
+    func didBegin(_ contact: SKPhysicsContact) {
+        
+        var firstBody = SKPhysicsBody();
+        var secondBody = SKPhysicsBody();
+        
+        if contact.bodyA.node?.name == "Player" {
+            firstBody = contact.bodyA;
+            secondBody = contact.bodyB;
+        } else {
+            firstBody = contact.bodyB;
+            secondBody = contact.bodyA;
+        }
+        
+        if firstBody.node?.name == "Player" && secondBody.node?.name == "Life" {
+            self.run(SKAction.playSoundFileNamed("Life Sound.wav", waitForCompletion: false));
+            GameplayController.instance.incrementLife();
+            secondBody.node?.removeFromParent()
+        }
+        
+        if firstBody.node?.name == "Player" && secondBody.node?.name == "Coin" {
+            self.run(SKAction.playSoundFileNamed("Coin Sound.wav", waitForCompletion: false));
+            GameplayController.instance.incrementCoin();
+            secondBody.node?.removeFromParent()
+        }
+        
+        if firstBody.node?.name == "Player" && secondBody.node?.name == "Dark Cloud" {
+            
+            self.scene?.isPaused = true;
+            
+            GameplayController.instance.life -= 1;
+            
+            if GameplayController.instance.life >= 0 {
+                GameplayController.instance.lifeText?.text = "x\(GameplayController.instance.life)"
+            } else {
+                createEndScorePanel()
+            }
+            
+            firstBody.node?.removeFromParent();
+            
+            Timer.scheduledTimer(timeInterval: TimeInterval(2), target: self, selector: #selector(GameplayScene.playerDied), userInfo: nil, repeats: false);
+            
+        }
+        
+    }
 }
 
